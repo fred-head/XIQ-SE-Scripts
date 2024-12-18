@@ -1,0 +1,23 @@
+# Define list with lines of the banner
+set bannerLines {
+    "-------------------------------------------------------------------------------"
+    "                UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED"
+    "      Only authorized users are allowed to connect to or use this device."
+    "              All access and use may be monitored and/or recorded."
+    " Monitoring and/or recording may be turned over to the appropriate authorities."
+    "     Any unauthorized use may be prosecuted to the full extent of the law."
+    "    Use of the system implies consent to the previously mentioned conditions."
+    "-------------------------------------------------------------------------------"
+}
+
+# Join lines and add line breaks
+set bannerText [join $bannerLines "\n"]
+
+# Add additional line breaks
+set formattedBannerText "\n$bannerText\n\n"
+
+# Configure the banner
+configure banner before-login save-to-configuration $formattedBannerText
+
+# Save configuration
+save
