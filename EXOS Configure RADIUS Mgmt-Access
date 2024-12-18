@@ -1,0 +1,50 @@
+#@MetaDataStart
+#@DetailDescriptionStart
+##############################################################################
+# Purpose       : Script to configure Radius-Servers for Mgmt-Authentication
+##############################################################################
+#@DetailDescriptionEnd
+
+#@SectionStart (description = "Setup RADIUS Parameters")
+#@VariableFieldLabel (description = "Enter primary RADIUS-Server IP:")
+set var primary_radius
+
+#@VariableFieldLabel (description = "Enter shared secret for primary RADIUS-Server:")
+set var secret_primary
+
+#@VariableFieldLabel (description = "Enter secondary RADIUS-Server IP:")
+set var secondary_radius
+
+#@VariableFieldLabel (description = "Enter shared secret for secondary RADIUS-Server:")
+set var secret_secondary
+
+#@VariableFieldLabel (description = "Enter Auth-UDP Port:")
+set var auth_udp_port 1812
+
+#@VariableFieldLabel (description = "Enter Acc-UDP Port:")
+set var acc_udp_port 1813
+
+#@MetaDataEnd
+
+# Configure primary RADIUS
+configure radius mgmt-access primary shared-secret  $secret_primary
+configure radius mgmt-access primary server $primary_radius $auth_udp_port client-ip $deviceIP vr VR-Default
+configure radius-accounting mgmt-access primary server $primary_radius $acc_udp_port client-ip $deviceIP vr VR-Default
+configure radius-accounting mgmt-access primary shared-secret  $secret_primary
+
+# Configure secondary RADIUS
+configure radius mgmt-access secondary shared-secret  $secret_secondary
+configure radius mgmt-access secondary server $secondary_radius $auth_udp_port client-ip $deviceIP vr VR-Default
+configure radius-accounting mgmt-access secondary server $secondary_radius $acc_udp_port client-ip $deviceIP vr VR-Default
+configure radius-accounting mgmt-access secondary shared-secret  $secret_secondary
+
+# Enable RADIUS and activate local user fallback
+enable radius mgmt-access
+enable radius-accounting mgmt-access
+
+# Configure RADIUS retries and timeouts
+configure radius retries 3
+configure radius timeout 5
+
+# Save configuration
+save
