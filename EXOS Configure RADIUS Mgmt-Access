@@ -38,7 +38,7 @@ configure radius mgmt-access secondary server $secondary_radius $auth_udp_port c
 configure radius-accounting mgmt-access secondary server $secondary_radius $acc_udp_port client-ip $deviceIP vr VR-Default
 configure radius-accounting mgmt-access secondary shared-secret  $secret_secondary
 
-# Enable RADIUS and activate local user fallback
+# Enable RADIUS
 enable radius mgmt-access
 enable radius-accounting mgmt-access
 
