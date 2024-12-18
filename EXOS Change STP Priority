@@ -1,0 +1,19 @@
+#@MetaDataStart
+#@DetailDescriptionStart
+##############################################################################
+# Purpose       : Script to change STP priority
+##############################################################################
+#@DetailDescriptionEnd
+
+#@SectionStart (description = "STP Priority")
+#@VariableFieldLabel (description = "Enter STP Priority 0-65535 in steps of 4096")
+set var stp_priority
+#@SectionEnd
+
+#@MetaDataEnd
+
+# Configure stp priority
+configure stpd s0 priority $stp_priority
+
+# Save configuration
+save
