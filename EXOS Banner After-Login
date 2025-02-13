@@ -1,38 +1,32 @@
 #@MetaDataStart
 #@DetailDescriptionStart
 ##############################################################################
-# Purpose       : Example script to showcase how to declare a parameter and use it
+# Purpose       : Script to configure After-Login Banner
 ##############################################################################
 #@DetailDescriptionEnd
-# simple parameter with a description
-# @VariableFieldLabel (description = "Enter Switch Name")
+
+#@SectionStart (description = "Switch Configuration")
+#@VariableFieldLabel (description = "Enter Switch Name")
 set var switch_name
 
-
-# Read only parameter. user cannot change value when running script
-# @VariableFieldLabel (description = "Enter Location")
+#@VariableFieldLabel (description = "Enter Location")
 set var location
 
-
-# Parameter that can take values only from the given list of valid values
-# @VariableFieldLabel (description = "Enter PIN")
+#@VariableFieldLabel (description = "Enter PIN")
 set var pin
+#@SectionEnd
 
 #@MetaDataEnd
-# Definiere die Liste mit den Zeilen des Banners
-set bannerLines {
-    "Name       : $switch_name"
-	"Location   : $location"
-	"PIN        : $pin"
-}
 
-# Verbinde die Zeilen der Bannerliste zu einem einzigen String mit Zeilenumbrüchen
-set bannerText [join $bannerLines "\n"]
+# Construct banner text directly
+set bannerText    "Name       : $switch_name\n"
+append bannerText "Location   : $location\n"
+append bannerText "PIN        : $pin\n"
 
-# Füge am Anfang und Ende des Banners zusätzliche Zeilenumbrüche hinzu
+# Insert additional line breaks
 set formattedBannerText "\n$bannerText\n\n"
 
-# Wende die Konfiguration an, um den Bannertext nach dem Login zu setzen
+# Configure after-login banner
 configure banner after-login $formattedBannerText
 
 # Save configuration
